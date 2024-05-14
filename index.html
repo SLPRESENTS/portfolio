@@ -8,42 +8,48 @@
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="about.css">
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+
 </head>
 
 <body>
     <nav class="navbar">
         <div class="container">
             <div class="logo-wrapper">
-                <a class="logo" href="index.html"> <strong>S L</strong> AIM SHOOT STUDIO </a>
+                <a class="logo" href="index.html"><strong>S L</strong> AIM SHOOT STUDIO</a>
             </div>
-
             <ul class="navbar-links">
-                <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                <li class="nav-item"><a class="nav-link" href="#works">Works</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#works">Works</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
             </ul>
         </div>
     </nav>
-
     <div class="header">
         <div class="container">
-            <video width="320" height="420" autoplay loop muted plays-inline class="background-clip">
-                <source src="./images/pp video.mp4" type="video/mp4">
+            <video width="320" height="420" autoplay="" loop="" muted plays-inline="" class="background-clip">
+                <source src="./images/pp%20video.mp4" type="video/mp4">
             </video>
             <div class="box">
-                <!-- <h4 class="">Hello there!</h4> -->
                 <h1 class="">SL PRESENTS</h1>
-                <p class="">
-                    Our passion for capturing the world forced me to add photography as my extension. The art of
-                    replicating the beautiful
-                    moments with the camera lens, mixed with simplicity and elegance leads my way. Photographing a
-                    moment means reproducing the same, in a creative form.
-                </p>
-                <a href="mailto:slfilmspresents@gmail.com" class="btn">Contact us</a>
+                <p class="">Our passion for capturing the world forced us to add photography as our extension. The art
+                    of replicating the beautiful moments with the camera lens, mixed with simplicity and elegance leads
+                    our way. Photographing a moment means reproducing the same, in a creative form.</p><a
+                    href="mailto:slfilmspresents@gmail.com" class="btn">Contact us</a>
             </div>
-
         </div>
     </div>
 
@@ -91,7 +97,7 @@
     <!-- Services section -->
     <section class="services bg-dark" id="services">
         <div class="heading">
-            <h2 class="section-title"><span>My Services</span></h2>
+            <h2 class="section-title"><span>Our Services</span></h2>
         </div>
         <div class="container">
 
@@ -209,7 +215,7 @@
     <!-- Works Gallery -->
     <section class="gallery bg-dark" id="works">
         <div class="heading">
-            <h2 class="title">My Works</h2>
+            <h2 class="title">Our Works</h2>
         </div>
         <!-- <div class="container">
             <ul>
@@ -287,37 +293,68 @@
                         <div class="form-title">
                             <h2>Get in touch</h2>
                         </div>
-                        <form action="" method="post" id="contactForm">
+                        <form id="contactForm">
                             <div class="one-line">
                                 <div class="box-input">
                                     <i class="far fa-user"></i>
-                                    <input type="text" name="" id="" class="text" placeholder="Full Name..">
+                                    <input type="text" id="full_name" placeholder="Full Name..">
                                 </div>
                                 <div class="box-input">
                                     <i class="fa fa-phone"></i>
-                                    <input type="text" name="" id="" class="text" placeholder="your phone">
+                                    <input type="text" id="phone" placeholder="Your phone">
                                 </div>
                             </div>
 
                             <div class="box-input">
                                 <i class="fa fa-at"></i>
-                                <input type="email" name="" id="" class="text" placeholder="email..">
+                                <input type="email" id="email" placeholder="Email..">
                             </div>
                             <div class="box-input">
-                                <label class="address"><i class="fa fa-location-pin"></i></label>
-                                <textarea name="" id="" cols="30" rows="5" placeholder="  your address.."></textarea>
+                                <label class="address"></label>
+                                <textarea id="message" cols="30" rows="5" placeholder="Your query.."></textarea>
                             </div>
-                            <button class="btn-send">Contact
-                                us</button>
-
+                            <button class="btn-send" type="button" id="sendEmail">Contact us</button>
+                            <div id="successMessage" style="display: none;">
+                                <p>Thank You!! for Contacting us, we will get back to you shortly..</p>
+                            </div>
+                            <div id="errorMessage" style="display: none;">
+                                <p>Failed to Contact us. Please try again later.</p>
+                            </div>
                         </form>
-
                     </div>
-
-
                 </div>
-
             </div>
+
+
+            <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
+            <script>
+                (function () {
+                    emailjs.init("f-_9VkiCpdpjjaNuK");
+                })();
+
+                document.getElementById('sendEmail').addEventListener('click', function () {
+                    sendMail();
+                });
+
+                function sendMail() {
+                    let params = {
+                        from_name: document.getElementById("full_name").value,
+                        from_phone_number: document.getElementById("phone").value,
+                        from_email: document.getElementById("email").value,
+                        message: document.getElementById("message").value,
+                    };
+
+                    emailjs.send("service_5pkgnxl", "template_py4yjfd", params)
+                        .then(function (response) {
+                            console.log("Email sent:", response);
+                            document.getElementById("successMessage").style.display = "block";
+                            document.getElementById("contactForm").reset()
+                        }, function (error) {
+                            console.error("Email send failed:", error);
+                            document.getElementById("errorMessage").style.display = "block";
+                        });
+                }
+            </script>
 
         </div>
     </section>
@@ -335,7 +372,7 @@
                         <a class="logo" href="index.html"> <strong>S L</strong> AIM SHOOT </a>
                     </div>
                     <div class="text">
-                        <p>We always love to hear from you about your innovative ideas. I will be happy to be your
+                        <p>We always love to hear from you about your innovative ideas. We will be happy to be your
                             photographer.</p>
                     </div>
                 </div>
@@ -379,6 +416,10 @@
                 <p class="">Copyright © 2024 by <a href="#">SL</a>. All rights reserved.</p>
             </div>
         </div>
+
+
+
+
 
     </footer>
 

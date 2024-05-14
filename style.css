@@ -52,6 +52,11 @@ section .box {
     color: #aaa;
 }
 
+.navbar .navbar-links .nav-item:hover {
+    color: #ff6347; /* Change to your desired hover color */
+    cursor: pointer; /* Changing cursor on hover */
+}
+
 .navbar .navbar-links a {
     color: white;
     font-size: 22px;
