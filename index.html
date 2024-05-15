@@ -301,7 +301,8 @@
                                 </div>
                                 <div class="box-input">
                                     <i class="fa fa-phone"></i>
-                                    <input type="text" id="phone" placeholder="Your phone">
+                                    <input type="text" id="phone" placeholder="Your phone"
+                                        oninput="validatePhoneNumber()">
                                 </div>
                             </div>
 
@@ -324,12 +325,20 @@
                     </div>
                 </div>
             </div>
+            <script>
+                function validatePhoneNumber() {
+                    const phoneInput = document.getElementById('phone');
+                    const phoneNumber = phoneInput.value.trim();
+                    const digitsOnly = phoneNumber.replace(/\D/g, '');
 
+                    phoneInput.value = digitsOnly;
+                }
+            </script>
 
             <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
             <script>
                 (function () {
-                    emailjs.init("f-_9VkiCpdpjjaNuK");
+                    emailjs.init("hmLSVKu4gNEXSy8x9");
                 })();
 
                 document.getElementById('sendEmail').addEventListener('click', function () {
@@ -344,7 +353,7 @@
                         message: document.getElementById("message").value,
                     };
 
-                    emailjs.send("service_5pkgnxl", "template_py4yjfd", params)
+                    emailjs.send("service_dbthb72", "template_0m2khbc", params)
                         .then(function (response) {
                             console.log("Email sent:", response);
                             document.getElementById("successMessage").style.display = "block";
