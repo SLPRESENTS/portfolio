@@ -297,22 +297,23 @@
                             <div class="one-line">
                                 <div class="box-input">
                                     <i class="far fa-user"></i>
-                                    <input type="text" id="full_name" placeholder="Full Name..">
+                                    <input type="text" id="full_name" placeholder="Full Name.." required>
                                 </div>
                                 <div class="box-input">
                                     <i class="fa fa-phone"></i>
                                     <input type="text" id="phone" placeholder="Your phone"
-                                        oninput="validatePhoneNumber()">
+                                        oninput="validatePhoneNumber()" required>
                                 </div>
                             </div>
 
                             <div class="box-input">
                                 <i class="fa fa-at"></i>
-                                <input type="email" id="email" placeholder="Email..">
+                                <input type="email" id="email" placeholder="Email.." required>
                             </div>
                             <div class="box-input">
                                 <label class="address"></label>
-                                <textarea id="message" cols="30" rows="5" placeholder="Your query.."></textarea>
+                                <textarea id="message" cols="30" rows="5" placeholder="Your query.."
+                                    required></textarea>
                             </div>
                             <button class="btn-send" type="button" id="sendEmail">Contact us</button>
                             <div id="successMessage" style="display: none;">
@@ -321,6 +322,10 @@
                             <div id="errorMessage" style="display: none;">
                                 <p>Failed to Contact us. Please try again later.</p>
                             </div>
+                            <div id="error" style="display: none;">
+                                <p>Please fill the details.</p>
+                            </div>
+
                         </form>
                     </div>
                 </div>
@@ -346,21 +351,36 @@
                 });
 
                 function sendMail() {
+
+                    document.getElementById("error").style.display = "none";
+
+
                     let params = {
                         from_name: document.getElementById("full_name").value,
                         from_phone_number: document.getElementById("phone").value,
                         from_email: document.getElementById("email").value,
                         message: document.getElementById("message").value,
                     };
+                    if (!params.from_name || !params.from_phone_number || !params.from_email || !params.message) {
+                        // Show error message
+                        document.getElementById("error").style.display = "block";
+                        return; // Stop execution
+                    }
+
+                    document.getElementById("sendEmail").disabled = true;
+
 
                     emailjs.send("service_dbthb72", "template_0m2khbc", params)
                         .then(function (response) {
                             console.log("Email sent:", response);
                             document.getElementById("successMessage").style.display = "block";
                             document.getElementById("contactForm").reset()
-                        }, function (error) {
+                        }).catch(function (error) {
                             console.error("Email send failed:", error);
                             document.getElementById("errorMessage").style.display = "block";
+                        }).finally(function () {
+                            // Re-enable the button after email sending process is completed
+                            document.getElementById("sendEmail").disabled = false;
                         });
                 }
             </script>
